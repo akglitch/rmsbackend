@@ -1,11 +1,13 @@
-// src/config/db.ts
-import { Sequelize } from 'sequelize';
+import mongoose from 'mongoose';
 
-const sequelize = new Sequelize('record_management', 'root', 'kaytee123', {
-  host: 'localhost',
-  dialect: 'mysql',
-  
-});
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI || 'mongodb+srv://ak:recorddb@cluster0.mzj7oqr.mongodb.net/records?retryWrites=true&w=majority&appName=Cluster0');
+    console.log('MongoDB connected');
+  } catch (err: any) {
+    console.error('Error connecting to MongoDB:', err.message);
+    process.exit(1);
+  }
+};
 
-export default sequelize;
-
+export default connectDB;
